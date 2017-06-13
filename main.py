@@ -1,8 +1,9 @@
+"""Test task #1."""
 from pprint import pprint
-import pdb
 
 
 def update(data, service, count):
+    """Main distribution function."""
     result = data.copy()
     for x in range(0, count):
         load, keys = current_load(data)  # get current load
@@ -18,6 +19,7 @@ def update(data, service, count):
 
 
 def current_load(data):
+    """Function to check current cluster load."""
     dat = data.values()
     keys = data.keys()
     list_l = []
@@ -31,6 +33,7 @@ def current_load(data):
 
 
 def main():
+    """Main function, just to look how it's work."""
     example_data = {
         'server1': {
             'django': 2,
@@ -49,6 +52,7 @@ def main():
 
     print("Configuration after:")
     pprint(example_data)
+
 
 if __name__ == '__main__':
     main()

@@ -2,6 +2,7 @@ import itertools
 import pytest
 import main
 
+
 def test_update():
     config = {
         'ginger': {
@@ -37,7 +38,23 @@ def test_initial():
     main.update(config, 'django', 3)
 
     assert sum(config['ginger'].values()) == sum(config['cucumber'].values())
-    assert sum(sum(x.values()) for x in config.values()) == 3+3
+    assert sum(sum(x.values()) for x in config.values()) == 3 + 3
+
+
+def test_custom():
+    config = {
+        'AEO#%$&#': {
+            'jango': 2,
+            'Flask': 3,
+        },
+        '%$#$': {
+            'flask': 1,
+        },
+    }
+    main.update(config, 'flask', 5)
+    main.update(config, 'DjaNgo', 3)
+    assert sum(config['%$#$'].values()) == sum(config['AEO#%$&#'].values())
+    assert config['AEO#%$&#'].get('flask') != config['AEO#%$&#'].get('Flask')
 
 
 @pytest.mark.xfail(reason="Advanced test. Optional to implement")
@@ -56,7 +73,7 @@ def test_predictable_config():
         }
         for svc, num in permutation:
             main.update(config, svc, num)
-        assert sum(sum(x.values()) for x in config.values()) == 7+13+17
+        assert sum(sum(x.values()) for x in config.values()) == 7 + 13 + 17
         permutations.append(config)
 
     assert all(p == permutations[0] for p in permutations[1:])
